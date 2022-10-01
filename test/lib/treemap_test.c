@@ -1,5 +1,3 @@
-/* negation.c - High level functions for negation interpretation */
-
 /*
  * Copyright (C) 2022 Dylan Middendorf
  *
@@ -22,23 +20,30 @@
  * SOFTWARE.
  */
 
+#include "treemap.h"
 #include <stdio.h>
-#include "parser.h"
 
-#define MAX_PATH 256
-
-int main(int argc, char *argv[])
+void main()
 {
-    FILE *fp;
-    if (argc == 1)
+    int values[] = {49, 11, 10, 95, 48, 91};
+    struct tree_map *tree = new_tree();
+    add_entry(tree, "alpha", (void *)&values[0]);
+    add_entry(tree, "beta", (void *)&values[1]);
+    add_entry(tree, "gamma", (void *)&values[2]);
+    add_entry(tree, "delta", (void *)&values[3]);
+    add_entry(tree, "epsilon", (void *)&values[4]);
+    add_entry(tree, "zeta", (void *)&values[5]);
+    
+    printf("tree = {");
+    struct list_node *list = entry_set(tree->root, NULL);
+    while (list->next != NULL)
     {
-        char file_path[MAX_PATH];
-        fp = fgets(file_path, MAX_PATH, stdin);
+        printf("\"%s\"=%d, ", list->key, *((int *)list->value));
+        list = list->next;
     }
-    else
-    {
-        fp = fopen(argv[0], "r");
-    }
+    printf("\"%s\"=%d}\n", list->key, *((int *)list->value));
 
-    parse(fp);
+    printf("Obtaining gamma: %d\n", *((int *)get_entry(tree, "gamma")->value));
+    printf("Obtaining epsilon: %d\n", *((int *)get_entry(tree, "epsilon")->value));
+
 }

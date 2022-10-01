@@ -1,5 +1,3 @@
-/* negation.c - High level functions for negation interpretation */
-
 /*
  * Copyright (C) 2022 Dylan Middendorf
  *
@@ -22,23 +20,40 @@
  * SOFTWARE.
  */
 
-#include <stdio.h>
-#include "parser.h"
+#ifndef TREEMAP_H
+#define TREEMAP_H
 
-#define MAX_PATH 256
-
-int main(int argc, char *argv[])
+/* A map entry (key-value pair) */
+struct entry
 {
-    FILE *fp;
-    if (argc == 1)
-    {
-        char file_path[MAX_PATH];
-        fp = fgets(file_path, MAX_PATH, stdin);
-    }
-    else
-    {
-        fp = fopen(argv[0], "r");
-    }
+    char *key;
+    void *value;
+    struct entry *left;
+    struct entry *right;
+    struct entry *parent;
+    unsigned int color : 1;
+};
 
-    parse(fp);
-}
+/* A Red-Black tree */
+struct tree_map
+{
+    struct entry *root;
+    int size;
+};
+
+struct list_node
+{
+    char *key;
+    char *value;
+    struct list_node *next;
+};
+
+struct tree_map *new_tree();
+
+struct entry *get_entry(struct tree_map *tree, char *key);
+
+void add_entry(struct tree_map *tree, char *key, void *value);
+
+struct list_node *entry_set(struct entry *entry, struct list_node *list);
+
+#endif

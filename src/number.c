@@ -1,7 +1,6 @@
-/* negation.c - High level functions for negation interpretation */
+/* number.c -- Important functions for numerical processing */
 
-/*
- * Copyright (C) 2022 Dylan Middendorf
+/* Copyright (C) 2022 Dylan Middendorf
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +21,8 @@
  * SOFTWARE.
  */
 
-#include <stdio.h>
-#include "parser.h"
-
-#define MAX_PATH 256
-
-int main(int argc, char *argv[])
+union number
 {
-    FILE *fp;
-    if (argc == 1)
-    {
-        char file_path[MAX_PATH];
-        fp = fgets(file_path, MAX_PATH, stdin);
-    }
-    else
-    {
-        fp = fopen(argv[0], "r");
-    }
-
-    parse(fp);
-}
+    int integer;
+    float floating_point;
+};

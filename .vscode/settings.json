@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "ctype.h": "c",
+        "string.h": "c",
+        "treemap.h": "c",
+        "cstdio": "c",
+        "*.tcc": "c"
     }
 }
